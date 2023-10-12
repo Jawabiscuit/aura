@@ -2,6 +2,9 @@
 
 #include "Actor/AuraEffectActor.h"
 
+#include "AbilitySystemComponent.h"
+#include "AbilitySystemInterface.h"
+#include "AbilitySystem/AuraAttributeSet.h"
 #include "Components/SphereComponent.h"
 
 AAuraEffectActor::AAuraEffectActor()
@@ -24,6 +27,12 @@ void AAuraEffectActor::OnOverlap(
 	const FHitResult& SweepResult
 )
 {
+	if (IAbilitySystemInterface* ASCInterface = Cast<IAbilitySystemInterface>(OtherActor))
+	{
+		const UAuraAttributeSet* AuraAttributeSet = Cast<UAuraAttributeSet>(
+			ASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UAuraAttributeSet::StaticClass()));
+		Destroy();
+	}
 }
 
 void AAuraEffectActor::EndOverlap(
