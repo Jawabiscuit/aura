@@ -10,45 +10,45 @@
 
 AAuraCharacter::AAuraCharacter()
 {
-    GetCharacterMovement()->bOrientRotationToMovement = true;
-    GetCharacterMovement()->RotationRate = FRotator(0.f, 400.f, 0.f);
-    GetCharacterMovement()->bConstrainToPlane = true;
-    GetCharacterMovement()->bSnapToPlaneAtStart = true;
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->RotationRate = FRotator(0.f, 400.f, 0.f);
+	GetCharacterMovement()->bConstrainToPlane = true;
+	GetCharacterMovement()->bSnapToPlaneAtStart = true;
 
-    bUseControllerRotationPitch = false;
-    bUseControllerRotationRoll = false;
-    bUseControllerRotationYaw = false;
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationRoll = false;
+	bUseControllerRotationYaw = false;
 }
 
 void AAuraCharacter::PossessedBy(AController* NewController)
 {
-    Super::PossessedBy(NewController);
+	Super::PossessedBy(NewController);
 
-    // Happens on the server
-    InitAbilityActorInfo();
+	// Happens on the server
+	InitAbilityActorInfo();
 }
 
 void AAuraCharacter::OnRep_PlayerState()
 {
-    Super::OnRep_PlayerState();
+	Super::OnRep_PlayerState();
 
-    // Happens on the client
-    InitAbilityActorInfo();
+	// Happens on the client
+	InitAbilityActorInfo();
 }
 
 void AAuraCharacter::InitAbilityActorInfo()
 {
-    AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
-    check(AuraPlayerState);
-    AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
-    AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
-    AttributeSet = AuraPlayerState->GetAttributeSet();
+	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(AuraPlayerState);
+	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
+	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
+	AttributeSet = AuraPlayerState->GetAttributeSet();
 
-    if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
-    {
-        if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD()))
-        {
-            AuraHUD->InitOverlay(AuraPlayerController, AuraPlayerState, AbilitySystemComponent, AttributeSet);
-        }
-    }
+	if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
+	{
+		if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD()))
+		{
+			AuraHUD->InitOverlay(AuraPlayerController, AuraPlayerState, AbilitySystemComponent, AttributeSet);
+		}
+	}
 }

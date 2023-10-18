@@ -7,11 +7,10 @@
 #include "AuraGameModeBase.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class AURA_API AAuraGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
 };

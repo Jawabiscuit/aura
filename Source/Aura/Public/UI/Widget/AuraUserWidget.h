@@ -7,7 +7,7 @@
 #include "AuraUserWidget.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class AURA_API UAuraUserWidget : public UUserWidget
@@ -19,6 +19,7 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UObject> WidgetController;
+
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void WidgetControllerSet();
