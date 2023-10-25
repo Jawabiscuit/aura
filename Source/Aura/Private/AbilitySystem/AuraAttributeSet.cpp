@@ -1,6 +1,8 @@
 
 
 #include "AbilitySystem/AuraAttributeSet.h"
+
+#include "GameplayEffectExtension.h"
 #include "Net/UnrealNetwork.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
@@ -32,6 +34,17 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	if (Attribute == GetManaAttribute())
 	{
 		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
+	}
+}
+
+void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
+{
+	Super::PostGameplayEffectExecute(Data);
+
+	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Health from GetHealth(): %f"), GetHealth());
+		UE_LOG(LogTemp, Warning, TEXT("Magnitude:               %f"), Data.EvaluatedData.Magnitude);
 	}
 }
 
