@@ -34,7 +34,7 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GE Attributes")
 	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
 
 	void InitPrimaryAttributes() const;
