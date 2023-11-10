@@ -40,4 +40,6 @@ void AAuraCharacterBase::InitDefaultAttributes() const
 {
 	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
+	// Depends on Max attributes so apply last
+	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);
 }
