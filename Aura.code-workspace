@@ -10,9 +10,6 @@
 		}
 	],
 	"settings": {
-		"[c++]": {
-			"editor.formatOnSave": true
-		},
 		"typescript.tsc.autoDetect": "off",
 		"npm.autoDetect": "off"
 	},
