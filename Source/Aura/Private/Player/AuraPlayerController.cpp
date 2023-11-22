@@ -9,6 +9,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "Input/AuraInputComponent.h"
 #include "Interaction/EnemyInterface.h"
+#include "NavigationPath.h"
+#include "NavigationSystem.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -134,9 +136,33 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 
 void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-	if (!GetASC())
+	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
+	{
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagReleased(InputTag);
+		}
 		return;
-	GetASC()->AbilityInputTagReleased(InputTag);
+	}
+
+	APawn* ControlledPawn = GetPawn();
+	if (FollowTime <= ShortPressThreshold && ControlledPawn)
+	{
+		if (UNavigationPath* NavPath = UNavigationSystemV1::FindPathToLocationSynchronously(
+				this,
+				ControlledPawn->GetActorLocation(),
+				CachedDestination))
+		{
+			Spline->ClearSplinePoints();
+			for (const FVector& PointLoc : NavPath->PathPoints)
+			{
+				Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
+				DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
+			}
+			bAutoRunning = true;
+		}
+	}
+	FollowTime = 0.f;
 }
 
 void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
