@@ -19,10 +19,10 @@ void UTargetDataUnderCursor::Activate()
 	}
 	else
 	{
-		FGameplayAbilitySpecHandle	  SpecHandle = GetAbilitySpecHandle();
-		FPredictionKey				  ActivationPredictionKey = GetActivationPredictionKey();
-		FAbilityTargetDataSetDelegate TargetDataSet = AbilitySystemComponent.Get()->AbilityTargetDataSetDelegate(
-			SpecHandle, ActivationPredictionKey);
+		const FGameplayAbilitySpecHandle SpecHandle = GetAbilitySpecHandle();
+		const FPredictionKey			 ActivationPredictionKey = GetActivationPredictionKey();
+		FAbilityTargetDataSetDelegate	 TargetDataSet = AbilitySystemComponent.Get()->AbilityTargetDataSetDelegate(
+			   SpecHandle, ActivationPredictionKey);
 
 		TargetDataSet.AddUObject(this, &UTargetDataUnderCursor::OnTargetDataReplicatedCallback);
 		const bool bCalledDelegate = AbilitySystemComponent.Get()->CallReplicatedTargetDataDelegatesIfSet(
