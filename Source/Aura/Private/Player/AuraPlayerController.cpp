@@ -131,14 +131,16 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 				CachedDestination))
 		{
 			Spline->ClearSplinePoints();
-			for (const FVector& PointLoc : NavPath->PathPoints)
+			if (NavPath->PathPoints.Num() > 0)
 			{
-				Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
-				// DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
+				for (const FVector& PointLoc : NavPath->PathPoints)
+				{
+					Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
+					// DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
+				}
+				CachedDestination = NavPath->PathPoints.Last();
+				bAutoRunning = true;
 			}
-			// Prevents undefined behavior for unreachable clicked locations (e.g. holes in nav mesh)
-			CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
-			bAutoRunning = true;
 		}
 	}
 	FollowTime = 0.f;
