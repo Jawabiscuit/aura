@@ -32,7 +32,7 @@ public:
 private:
 	virtual void Activate() override;
 	void		 SendCursorTargetData();
-	void		 OnTargetDataReplicatedCallback(
-				const FGameplayAbilityTargetDataHandle& DataHandle,
-				FGameplayTag							ActivationTag);
+
+	void OnTargetDataReplicatedCallback(
+		const FGameplayAbilityTargetDataHandle& DataHandle, FGameplayTag ActivationTag);
 };
