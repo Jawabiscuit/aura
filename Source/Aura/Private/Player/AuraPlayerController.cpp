@@ -11,6 +11,7 @@
 #include "Interaction/EnemyInterface.h"
 #include "NavigationPath.h"
 #include "NavigationSystem.h"
+#include "NiagaraFunctionLibrary.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -164,6 +165,8 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 				bAutoRunning = true;
 			}
 		}
+		if (GetASC() && !GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_CursorTrace))
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, NiagaraSystem, CachedDestination);
 	}
 	FollowTime = 0.f;
 }
