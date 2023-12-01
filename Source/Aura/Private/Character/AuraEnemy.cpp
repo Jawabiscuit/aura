@@ -36,13 +36,15 @@ void AAuraEnemy::BeginPlay()
 	if (UAuraAttributeSet* AuraAS = Cast<UAuraAttributeSet>(AttributeSet))
 	{
 		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-			AuraAS->GetHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {
-			OnHealthChanged.Broadcast(Data.NewValue);
-		});
+								  AuraAS->GetHealthAttribute())
+			.AddLambda([this](const FOnAttributeChangeData& Data) {
+				OnHealthChanged.Broadcast(Data.NewValue);
+			});
 		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-			AuraAS->GetMaxHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {
-			OnHealthChanged.Broadcast(Data.NewValue);
-		});
+								  AuraAS->GetMaxHealthAttribute())
+			.AddLambda([this](const FOnAttributeChangeData& Data) {
+				OnHealthChanged.Broadcast(Data.NewValue);
+			});
 
 		OnHealthChanged.Broadcast(AuraAS->GetHealth());
 		OnMaxHealthChanged.Broadcast(AuraAS->GetMaxHealth());
