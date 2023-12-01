@@ -3,6 +3,7 @@
 #include "Character/AuraEnemy.h"
 
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Components/WidgetComponent.h"
 #include "UI/Widget/AuraUserWidget.h"
@@ -34,10 +35,12 @@ void AAuraEnemy::BeginPlay()
 
 	if (UAuraAttributeSet* AuraAS = Cast<UAuraAttributeSet>(AttributeSet))
 	{
-		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAS->GetHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+			AuraAS->GetHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {
 			OnHealthChanged.Broadcast(Data.NewValue);
 		});
-		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAS->GetMaxHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+			AuraAS->GetMaxHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {
 			OnHealthChanged.Broadcast(Data.NewValue);
 		});
 
@@ -51,6 +54,11 @@ void AAuraEnemy::InitAbilityActorInfo()
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 	InitDefaultAttributes();
+}
+
+void AAuraEnemy::InitDefaultAttributes() const
+{
+	UAuraAbilitySystemLibrary::InitDefaultAttributes(this, CharacterClass, Level, AbilitySystemComponent);
 }
 
 void AAuraEnemy::HighlightActor()

@@ -35,7 +35,7 @@ class AURA_API UCharacterClassInfo : public UDataAsset
 
 public:
 	UPROPERTY(EditDefaultsOnly, Category = "Character Class Defaults")
-	TMap<ECharacterClass, FCharacterClassDefaultInfo> CharacterClassInformation;
+	TMap<ECharacterClass, FCharacterClassDefaultInfo> CharacterClassDefaultInfo;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaults")
 	TSubclassOf<UGameplayEffect> SecondaryAttributes;
